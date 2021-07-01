@@ -74,6 +74,7 @@ class ImageListFragment : Fragment(), TextWatcher, TextView.OnEditorActionListen
 
     private fun searchImages() {
         isLoading = true
+        tv_start_view.gone()
         viewModel.getImages(et_search.text.toString())
         setupTempView()
         hideKeyboard()

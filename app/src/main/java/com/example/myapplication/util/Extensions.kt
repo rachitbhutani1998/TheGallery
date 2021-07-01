@@ -14,15 +14,19 @@ fun ImageView.loadImage(
     image: ImageModel,
     glideRequestListener: RequestListener<Drawable>? = null
 ) {
-    val url = String.format(
-        "https://farm%s.staticflickr.com/%s/%s_%s_m.jpg",
-        image.farm,
-        image.server,
-        image.id,
-        image.secret
-    )
+    val url = image.buildUrl()
     Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.DATA)
         .listener(glideRequestListener).into(this)
+}
+
+fun ImageView.loadImage(context: Context?, url: String, glideRequestListener: RequestListener<Drawable>? = null) {
+    context?.let {
+        Glide.with(it).load(url).listener(glideRequestListener).diskCacheStrategy(DiskCacheStrategy.DATA).into(this)
+    }
+}
+
+fun ImageModel.buildUrl(): String {
+    return String.format("https://farm%s.staticflickr.com/%s/%s_%s_m.jpg", farm, server, id, secret)
 }
 
 fun View.show() {

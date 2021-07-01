@@ -23,6 +23,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.model.ImageModel
 import com.example.myapplication.ui.adapter.ImageListAdapter
 import com.example.myapplication.util.ImageHolderCallback
+import com.example.myapplication.util.buildUrl
 import com.example.myapplication.util.gone
 import com.example.myapplication.util.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,7 +86,10 @@ class ImageListFragment : Fragment(), TextWatcher, TextView.OnEditorActionListen
         rv_images.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (recyclerView.canScrollVertically(RecyclerView.VERTICAL).not()) searchImages()
+                if (recyclerView.canScrollVertically(RecyclerView.VERTICAL)
+                        .not() && mAdapter?.isEmpty() == false
+                )
+                    searchImages()
             }
         })
     }
@@ -142,7 +146,7 @@ class ImageListFragment : Fragment(), TextWatcher, TextView.OnEditorActionListen
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-        return if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+        return if (actionId == EditorInfo.IME_ACTION_SEARCH && et_search?.text?.isNotEmpty() == true) {
             searchImages()
             true
         } else false
@@ -173,5 +177,14 @@ class ImageListFragment : Fragment(), TextWatcher, TextView.OnEditorActionListen
 
     override fun onImageLoadFailed(pos: Int) {
         mAdapter?.removeImage(pos)
+    }
+
+    override fun onImageClicked(image: ImageModel) {
+        openImageFragment(image)
+    }
+
+    private fun openImageFragment(model: ImageModel) {
+        val imageViewFragment = ImageViewFragment.newInstance(model.buildUrl())
+        imageViewFragment.show(childFragmentManager, "")
     }
 }

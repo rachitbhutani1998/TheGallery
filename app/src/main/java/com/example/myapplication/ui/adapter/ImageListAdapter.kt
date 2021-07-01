@@ -38,8 +38,12 @@ class ImageListAdapter(private val mContext: Context, private val imageHolderCal
     override fun getItemCount(): Int = mImageList.size
 
     fun removeImage(pos: Int) {
-        mImageList.removeAt(pos)
-        notifyItemRemoved(pos)
+        if (pos > -1) {
+            mImageList.removeAt(pos)
+            notifyItemRemoved(pos)
+        }
     }
+
+    fun isEmpty(): Boolean = itemCount == 0
 
 }

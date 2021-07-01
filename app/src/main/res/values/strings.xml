@@ -2,5 +2,5 @@
     <string name="app_name">The Gallery</string>
     <string name="search_hint">Search your image</string>
     <string name="empty_placeholder">Search The Gallery Now!</string>
-    <string name="loading_placeholder">Wait wait wait...</string>
+    <string name="loading_placeholder">Wait wait wait…</string>
 </resources>

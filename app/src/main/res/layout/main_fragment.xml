@@ -62,9 +62,15 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:paddingTop="24dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/et_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Wait for the fetch!" />
+
+    <FrameLayout
+        android:id="@+id/frag_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

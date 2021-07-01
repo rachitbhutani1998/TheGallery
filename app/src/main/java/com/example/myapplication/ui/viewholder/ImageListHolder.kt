@@ -41,6 +41,10 @@ class ImageListHolder constructor(itemView: View, val mCallback: ImageHolderCall
             }
 
         })
+
+        itemView.iv_content.setOnClickListener {
+            mCallback.onImageClicked(image)
+        }
     }
 
     fun hideView() {

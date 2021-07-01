@@ -17,6 +17,7 @@ class MainViewModel
 constructor(private val flickrRepository: FlickrRepository) : ViewModel() {
 
     private var savedQuery: String = ""
+    private var totalPages: Int = 0
     private var page: MutableLiveData<Int> = MutableLiveData(0)
 
     companion object {
@@ -33,6 +34,7 @@ constructor(private val flickrRepository: FlickrRepository) : ViewModel() {
                 val photoResponse = flickrRepository.loadImages(savedQuery, page.value ?: DEFAULT_PAGE)
                 val images = photoResponse?.images?.toMutableList() ?: mutableListOf()
                 val pageNo = photoResponse?.page ?: DEFAULT_PAGE
+                totalPages = photoResponse?.totalPages ?: DEFAULT_PAGE
                 page.postValue(pageNo)
                 if (photoResponse?.page ?: DEFAULT_PAGE > 1) mImages.postValue(mImages.value?.apply { addAll(images) })
                 else mImages.postValue(images)
